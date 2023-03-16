@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{f792a956-dc3e-46cb-b3db-db7492048ca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json">
+      <Filter>db</Filter>
+    </None>
+    <None Include="rooms.json">
+      <Filter>db</Filter>
+    </None>
+    <None Include="users.json">
+      <Filter>db</Filter>
+    </None>
   </ItemGroup>
 </Project>
