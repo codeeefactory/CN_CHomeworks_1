@@ -90,7 +90,6 @@ int main() {
 			std::cout << "Accepted new client connection" << std::endl;
 		}
 
-
 		// Create a new thread to handle the client
 		std::thread clientThread(handleClient, clientSocket);
 		clientThread.detach();
