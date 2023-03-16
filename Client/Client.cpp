@@ -12,8 +12,7 @@ int main() {
 		SOCKET clientSocket = INVALID_SOCKET;
 		struct sockaddr_in serverAddr;
 		char buffer[1024] = { 0 };
-		const char* message = "Hello from client";
-
+		const char* message = "1.View user information\n2.View all users\n3.View rooms information\n4.Booking\n5.Canceling\n6.pass day\n7.Edit information\n8.Leaving room\n9.Rooms\n0.Logout";
 
 		// Initialize Winsock
 		iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);

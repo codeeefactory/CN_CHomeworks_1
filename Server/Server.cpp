@@ -3,6 +3,9 @@
 #include <cstring>
 #include <thread>
 #include <vector>
+#include <ctime>
+#include "Commands.cpp"
+#include "ConfigReader.cpp"
 
 #pragma comment(lib, "Ws2_32.lib")
 
@@ -32,7 +35,21 @@ void handleClient(SOCKET clientSocket) {
 	closesocket(clientSocket);
 }
 
-int main() {
+int main(int argc,char* argv) {
+
+	ConfigReader configReader;
+	Commands commands;
+
+	int serverPort = configReader.readServerPort();
+
+	if (serverPort == -1) {
+		return 1;
+	}
+
+	int result = commands.setTime();
+	while (result == -1) {
+		result = commands.setTime();
+	}
 	WSADATA wsaData;
 	int iResult;
 	SOCKET listenSocket = INVALID_SOCKET;
@@ -76,6 +93,8 @@ int main() {
 		WSACleanup();
 		return 1;
 	}
+	
+	
 	std::cout << "Server listening on port 8080" << std::endl;
 
 	// Handle incoming connections in a loop
