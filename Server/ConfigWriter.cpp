@@ -1,19 +1,11 @@
-#include "ConfigReader.h"
+#include "ConfigWriter.h"
 #include <json\json.h>
 #include <fstream>
 #include <iostream>
 
- 
-
-
-
-
-class ConfigReader {
-
-
-
+class ConfigWriter {
 private:
-	Json::Value readConfigFile()
+	Json::Value writeConfigFile()
 	{
 		// open JSON file
 		std::ifstream configFile("config.json");
@@ -28,8 +20,8 @@ private:
 		return root;
 	}
 public:
-	int readServerPort() {
-		Json::Value config = readConfigFile();
+	int writeServerPort() {
+		Json::Value config = writeConfigFile();
 
 		if (config["port"].isNull()) {
 			std::cerr << "Error: port number is missing in the config file." << std::endl;
