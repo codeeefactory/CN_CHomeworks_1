@@ -2,17 +2,95 @@
 #include <WinSock2.h>
 #include <cstring>
 #include <Ws2tcpip.h>
-
+#include <string>
+#include<fstream>
+#include "Commands.cpp"
+using namespace std;
 #pragma comment(lib, "Ws2_32.lib")
+int signin_parse(string message) {
+	WSADATA wsaData;
+	int iResult;
+	SOCKET clientSocket = INVALID_SOCKET;
+	struct sockaddr_in serverAddr;
+	char buffer[1024] = { 0 };
 
+	// Initialize Winsock
+	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (iResult != 0) {
+		std::cout << "WSAStartup failed: " << iResult << std::endl;
+		return 1;
+	}
+
+	// Create a socket for the client
+	clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (clientSocket == INVALID_SOCKET) {
+		std::cout << "Error creating client socket: " << WSAGetLastError() << std::endl;
+		WSACleanup();
+		return 1;
+	}
+
+	// Connect to the server
+	memset(&serverAddr, 0, sizeof(serverAddr));
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_port = htons(8080);
+	iResult = inet_pton(AF_INET, "127.0.0.1", &serverAddr.sin_addr);
+
+	if (iResult <= 0) {
+		std::cout << "Error converting server IP address: " << WSAGetLastError() << std::endl;
+		closesocket(clientSocket);
+		WSACleanup();
+		return 1;
+	}
+	iResult = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+
+	while (iResult == SOCKET_ERROR)
+	{
+
+		iResult = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+	}
+
+	if (iResult == SOCKET_ERROR) {
+		std::cout << "Error connecting to server: " << WSAGetLastError() << std::endl;
+		closesocket(clientSocket);
+		WSACleanup();
+		return 1;
+	}
+	iResult = send(clientSocket, message.c_str(), strlen(message.c_str()), 0);
+	if (iResult == SOCKET_ERROR) {
+		std::cout << "Error sending data to server: " << WSAGetLastError() << std::endl;
+		closesocket(clientSocket);
+		WSACleanup();
+		return 1;
+	}
+	std::cout << "Sent message to server" << std::endl;
+
+	// Receive a response from the server
+	iResult = recv(clientSocket, buffer, sizeof(buffer), 0);
+	if (iResult > 0) {
+		std::cout << "Received response from server: " << buffer << std::endl;
+	}
+	else if (iResult == 0) {
+		std::cout << "Server disconnected" << std::endl;
+	}
+	else {
+		std::cout << "Error receiving response from server: " << WSAGetLastError() << std::endl;
+		closesocket(clientSocket);
+		WSACleanup();
+		return 1;
+	}
+
+	system("pause");
+}
 int main() {
 	try {
+		Commands cmd;
+		
 		WSADATA wsaData;
 		int iResult;
 		SOCKET clientSocket = INVALID_SOCKET;
 		struct sockaddr_in serverAddr;
 		char buffer[1024] = { 0 };
-		const char* message = "1.View user information\n2.View all users\n3.View rooms information\n4.Booking\n5.Canceling\n6.pass day\n7.Edit information\n8.Leaving room\n9.Rooms\n0.Logout";
+		const char* message = "\n1.View user information\n2.View all users\n3.View rooms information\n4.Booking\n5.Canceling\n6.pass day\n7.Edit information\n8.Leaving room\n9.Rooms\n0.Logout";
 
 		// Initialize Winsock
 		iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -34,6 +112,7 @@ int main() {
 		serverAddr.sin_family = AF_INET;
 		serverAddr.sin_port = htons(8080);
 		iResult = inet_pton(AF_INET, "127.0.0.1", &serverAddr.sin_addr);
+		
 		if (iResult <= 0) {
 			std::cout << "Error converting server IP address: " << WSAGetLastError() << std::endl;
 			closesocket(clientSocket);
@@ -41,11 +120,32 @@ int main() {
 			return 1;
 		}
 		iResult = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+
+		while (iResult==SOCKET_ERROR)
+		{
+
+			iResult = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+		}
+
 		if (iResult == SOCKET_ERROR) {
 			std::cout << "Error connecting to server: " << WSAGetLastError() << std::endl;
 			closesocket(clientSocket);
 			WSACleanup();
 			return 1;
+		}
+		string command;
+		cout << "command:";
+		getline(cin, command);
+		//int result = cmd.commandreader(command);
+		//while (result == -1) {
+			//result = cmd.commandreader(command);
+		//}
+		if (command=="signin")
+			//check cmd
+			
+		{
+			system("cls");
+			signin_parse(command);
 		}
 
 		// Send a message to the server
