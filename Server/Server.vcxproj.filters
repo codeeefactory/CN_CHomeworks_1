@@ -30,6 +30,12 @@
     <ClCompile Include="ConfigWriter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dist\jsoncpp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.json">
@@ -43,13 +49,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Commands.h">
+    <ClInclude Include="dist\json\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfigWriter.h">
+    <ClInclude Include="dist\json\json-forwards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

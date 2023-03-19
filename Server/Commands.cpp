@@ -7,6 +7,8 @@ class Commands {
 private:
 
 public:
+	int signup() {
+	}
 	int setTime() {
 		// read command from user
 		std::string command;

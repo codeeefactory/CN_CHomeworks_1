@@ -35,8 +35,7 @@ void handleClient(SOCKET clientSocket) {
 	closesocket(clientSocket);
 }
 
-int main(int argc,char* argv) {
-
+int main(int argc, char* argv) {
 	ConfigReader configReader;
 	Commands commands;
 
@@ -66,6 +65,7 @@ int main(int argc,char* argv) {
 
 	// Create a socket for the server to listen for incoming connections
 	listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
 	if (listenSocket == INVALID_SOCKET) {
 		std::cout << "Error creating listen socket: " << WSAGetLastError() << std::endl;
 		WSACleanup();
@@ -93,8 +93,7 @@ int main(int argc,char* argv) {
 		WSACleanup();
 		return 1;
 	}
-	
-	
+
 	std::cout << "Server listening on port 8080" << std::endl;
 
 	// Handle incoming connections in a loop

@@ -131,7 +131,9 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="ConfigReader.cpp" />
     <ClCompile Include="ConfigWriter.cpp" />
+    <ClCompile Include="dist\jsoncpp.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="UserReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.json" />
@@ -139,9 +141,8 @@
     <None Include="users.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Commands.h" />
-    <ClInclude Include="ConfigReader.h" />
-    <ClInclude Include="ConfigWriter.h" />
+    <ClInclude Include="dist\json\json-forwards.h" />
+    <ClInclude Include="dist\json\json.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,17 +1,7 @@
-#include "ConfigReader.h"
 #include <json\json.h>
 #include <fstream>
 #include <iostream>
-
- 
-
-
-
-
 class ConfigReader {
-
-
-
 private:
 	Json::Value readConfigFile()
 	{
